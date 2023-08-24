@@ -4,9 +4,9 @@ on:
   workflow_dispatch: {}
 
 env:
-  applicationfolder: spring-boot-hello-world-example
+  applicationfolder: GITACTIONSDEPLOYTOAWS
   AWS_REGION: eu-west-1
-  S3BUCKET: codedeploystack-webappdeploymentbucket-1ua6lhkvy82ty 
+  S3BUCKET: codedeploystack-webappdeploymentbucket-1tz0gvfka2owt 
 
 
 jobs:
@@ -20,10 +20,10 @@ jobs:
       - uses: actions/checkout@v2
         name: Checkout Repository
 
-      - uses: aws-actions/configure-aws-credentials@v1
+      - uses: aws-actions/configure-aws-credentials@v1-node16
         with:
           role-to-assume: arn:aws:iam::201087200993:role/CodeDeployRoleforGitHub
-          role-session-name: GitHub-Action-Role
+          role-session-name: GithubIAMRoleArn
           aws-region: ${{ env.AWS_REGION }}
 
       - name: Set up JDK 1.8
@@ -52,10 +52,10 @@ jobs:
       contents: read
     steps:
     - uses: actions/checkout@v2
-    - uses: aws-actions/configure-aws-credentials@v1
+    - uses: aws-actions/configure-aws-credentials@v1-node16
       with:
         role-to-assume: arn:aws:iam::201087200993:role/CodeDeployRoleforGitHub
-        role-session-name: GitHub-Action-Role
+        role-session-name: GithubIAMRoleArn
         aws-region: eu-west-1
     - run: |
         echo "Deploying branch ${{ env.GITHUB_REF }} to ${{ github.event.inputs.environment }}"
